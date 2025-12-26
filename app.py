@@ -20,9 +20,13 @@ from mlflow import sklearn as mlflow_sklearn
 import logging
 
 # logging configuration
-# so first we have 5 levels of logging 
+# so first we have 5 levels of logging
 # DEBUG, INFO, WARNING, ERROR, CRITICAL
+import dagshub
 
+dagshub.init(
+    repo_owner="mohamed.tamer.mtn", repo_name="MLflow_with_Dagshub", mlflow=True
+)
 
 logging.basicConfig(level=logging.WARN)
 logger = logging.getLogger(__name__)
@@ -49,7 +53,6 @@ if __name__ == "__main__":
             e,
         )
 
-   
     logger.info("Successfully downloaded the data")
 
     # Split the data into training and test sets. (0.75, 0.25) split.
@@ -90,8 +93,10 @@ if __name__ == "__main__":
 
         ## For Remote server only(DAGShub)
 
-        #   remote_server_uri = "https://dagshub.com/mohamed.tamer.mtn/mlflowexperiments.mlflow"
-        #   mlflow.set_tracking_uri(remote_server_uri)
+        remote_server_url = (
+            "https://dagshub.com/mohamed.tamer.mtn/MLflow_with_Dagshub.mlflow"
+        )
+        mlflow.set_tracking_uri(remote_server_url)
 
         # urlparse helps to parse the tracking uri and get the scheme of the store
         # e.g., file, http, https, etc.
